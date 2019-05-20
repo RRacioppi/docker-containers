@@ -11,6 +11,7 @@ Each folder identifies the main technologies which the `docker-compose.yml` insi
 
 ### Example of directory structure
 
+```
 clusters
 ├── mongo
     └── docker-compose.yml
@@ -20,3 +21,4 @@ clusters
     ├── docker-compose.yml
     └── sonarqube-postgres.yml
 └── ...
+```
