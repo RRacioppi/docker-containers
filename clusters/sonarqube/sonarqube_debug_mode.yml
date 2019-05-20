@@ -1,0 +1,18 @@
+version: "3"
+
+services:
+  sonarqube:
+    image: sonarqube:6.7
+    hostname: sonarqube
+    command: -Dsonar.ce.javaOpts=-Xmx2048m -Dsonar.web.javaOpts=-Xmx2048m -Dsonar.web.javaAdditionalOpts=-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=8000
+    ports:
+      - "9000:9000"
+      - "9092:9092"
+      - "8000:8000"
+    volumes:
+      - ./sonarqube_assets/sonarqube_conf:/opt/sonarqube/conf
+      - ./sonarqube_assets/sonarqube_data:/opt/sonarqube/data
+      - ./sonarqube_assets/sonarqube_extensions:/opt/sonarqube/extensions
+      - ./sonarqube_assets/sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+
+

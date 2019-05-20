@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  vault:
+    environment:
+     VAULT_DEV_ROOT_TOKEN_ID: 'insecure-development-root-token'
+     VAULT_ADDRESS: 'http://127.0.0.1:8200'
+    image: library/vault:1.0.0
+    hostname: vault
+    ports:
+      - "8200:8200"
+    cap_add:
+      - IPC_LOCK
+

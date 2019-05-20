@@ -1,0 +1,30 @@
+version: "3"
+
+services:
+
+  consul-server-1:
+    image: consul:1.4.0
+    hostname: consul-server-1
+    command: agent -ui -server -dev -bind=0.0.0.0 -client=0.0.0.0 -retry-join=consul-server-2 -retry-join=consul-server-3
+
+  consul-server-2:
+    image: consul:1.4.0
+    hostname: consul-server-2
+    command: agent -ui -server -dev -bind=0.0.0.0 -client=0.0.0.0 -retry-join=consul-server-1 -retry-join=consul-server-3
+
+  consul-server-3:
+    image: consul:1.4.0
+    hostname: consul-server-3
+    command: agent -ui -server -dev -bind=0.0.0.0 -client=0.0.0.0 -retry-join=consul-server-1 -retry-join=consul-server-2
+
+
+  consul-client-1:
+    image: consul:1.4.0
+    hostname: consul-client-1
+    command: agent -ui -bind=0.0.0.0 -client=0.0.0.0 -retry-join=consul-server-1 -retry-join=consul-server-2 -retry-join=consul-server-3
+
+  consul-template:
+    image: hashicorp/consul-template:0.20.0-alpine
+    hostname: consul-template-node
+    #command: -consul-addr="consul-client-1:8500"
+    entrypoint: sleep 100000000
