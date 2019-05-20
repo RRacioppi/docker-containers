@@ -1,0 +1,23 @@
+FROM jenkins/jenkins:2.75
+
+#Installo i plugin =>
+RUN /usr/local/bin/install-plugins.sh hashicorp-vault-plugin:2.1.0
+RUN /usr/local/bin/install-plugins.sh maven-plugin:2.17
+RUN /usr/local/bin/install-plugins.sh git:3.5.1
+RUN /usr/local/bin/install-plugins.sh artifactory:2.12.2
+RUN /usr/local/bin/install-plugins.sh workflow-aggregator:2.5 
+RUN /usr/local/bin/install-plugins.sh blueocean:1.2.0
+RUN /usr/local/bin/install-plugins.sh sonar:2.6.1
+RUN /usr/local/bin/install-plugins.sh sonar-quality-gates:1.1.0
+RUN /usr/local/bin/install-plugins.sh gitlab-plugin:1.4.7
+RUN /usr/local/bin/install-plugins.sh slack:2.2
+RUN /usr/local/bin/install-plugins.sh pipeline-maven:2.5.2
+RUN /usr/local/bin/install-plugins.sh simple-theme-plugin:0.3
+
+
+
+#Disabilito il wizard =>
+RUN echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state
+ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
+#
+
