@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  sonarqube:
+    image: sonarqube:6.7.2
+    hostname: sonarqube
+    command: -Dsonar.ce.javaOpts=-Xmx2048m -Dsonar.web.javaOpts=-Xmx2048m
+    ports:
+      - "9000:9000"
+      - "9092:9092"
+    volumes:
+      - ./sonarqube_assets/sonarqube_conf:/opt/sonarqube/conf
+      - ./sonarqube_assets/sonarqube_data:/opt/sonarqube/data
+      - ./sonarqube_assets/sonarqube_extensions:/opt/sonarqube/extensions
+      - ./sonarqube_assets/sonarqube_bundled-plugins:/opt/sonarqube/lib/bundled-plugins
+
+
