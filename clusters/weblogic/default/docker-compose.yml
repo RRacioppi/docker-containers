@@ -1,4 +1,6 @@
-# Use root/example as user/password credentials
+# Use weblogic/Weblogic1234_ as user/password credentials
+# Console at: https://localhost:9002/console/login/LoginForm.jsp
+# Applications at: https://localhost:9002
 version: '3.1'
 
 services:

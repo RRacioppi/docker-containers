@@ -1,0 +1,59 @@
+# Use weblogic/Weblogic1234_ as user/password credentials
+# Console at: https://localhost:9002/console/login/LoginForm.jsp
+# Applications at: https://localhost:9002
+version: '3.1'
+services:
+  wlsadmin:
+    user: root
+    hostname: wlsadmin
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7001:7001"
+    volumes:
+      - user_projects:/u01/oracle/user_projects
+    env_file: ./container-scripts/domain.properties
+    environment: 
+      - ADMIN_PASSWORD=Weblogic1234_
+
+
+  managed_1:
+    user: root
+    hostname: managed_1
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    volumes:
+      - user_projects:/u01/oracle/user_projects
+    env_file: ./container-scripts/domain.properties
+    environment: 
+      - ADMIN_PASSWORD=Weblogic1234_
+      - MS_NAME=managed_1
+    depends_on:
+      - wlsadmin
+    command: createServer.sh
+
+  managed_2:
+    user: root
+    hostname: managed_2
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8001"
+    volumes:
+      - user_projects:/u01/oracle/user_projects
+    env_file: ./container-scripts/domain.properties
+    environment: 
+      - ADMIN_PASSWORD=Weblogic1234_
+      - MS_NAME=managed_2
+    depends_on:
+      - wlsadmin
+    command: createServer.sh
+
+volumes:
+  user_projects:
+
