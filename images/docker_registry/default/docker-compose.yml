@@ -1,0 +1,20 @@
+version: '3.1'
+services:
+  registry:
+    image: registry:2.7.1
+    ports:
+      - 5000:5000
+    environment:
+      - DOCKER_REGISTRY_CONFIG=/registry_conf/config.yml
+    volumes:
+      - ./registry_conf:/registry-conf
+  registry-ui: #unofficial
+    image: jc21/registry-ui
+    ports:
+      - 50000:80
+    environment:
+      - REGISTRY_HOST=registry:5000
+      - REGISTRY_SSL=false
+      - REGISTRY_DOMAIN=registry:5000
+      - REGISTRY_STORAGE_DELETE_ENABLED=
+    restart: on-failure
