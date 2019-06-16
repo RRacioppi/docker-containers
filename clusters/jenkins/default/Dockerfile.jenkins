@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.75
+FROM jenkins/jenkins:lts
 
 #Installo i plugin =>
 RUN /usr/local/bin/install-plugins.sh hashicorp-vault-plugin:2.1.0
@@ -21,3 +21,4 @@ RUN echo 2.0 > /usr/share/jenkins/ref/jenkins.install.UpgradeWizard.state
 ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
 #
 
+e379dd743350dd1e72389bd47747dcda6e09c25b28a785d03766ecb9a3abb993
