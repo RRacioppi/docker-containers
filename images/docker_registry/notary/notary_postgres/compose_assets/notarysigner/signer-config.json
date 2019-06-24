@@ -1,0 +1,17 @@
+{
+    "server": {
+        "http_addr": ":4444",
+        "grpc_addr": ":7899",
+        "tls_cert_file": "/etc/notarysigner/certs/notary-signer.crt",
+        "tls_key_file": "/etc/notarysigner/certs/notary-signer.key",
+        "client_ca_file": "/etc/notarysigner/certs/notary-server.crt"
+    },
+    "logging": {
+        "level": "debug"
+    },
+    "storage": {
+        "backend": "postgres",
+        "default_alias": "passwordalias1",
+        "db_url": "postgres://signer@postgresql:5432/notarysigner?sslmode=verify-ca&sslrootcert=/etc/notarysigner/database/ca.pem&sslcert=/etc/notarysigner/database/notary-signer.pem&sslkey=/etc/notarysigner/database/notary-signer-key.pem"
+    }
+}

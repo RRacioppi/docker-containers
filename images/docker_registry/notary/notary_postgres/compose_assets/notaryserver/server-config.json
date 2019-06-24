@@ -1,0 +1,23 @@
+{
+    "server": {
+        "http_addr": ":4443",
+        "tls_key_file": "/etc/notaryserver/certs/notary-server.key",
+        "tls_cert_file": "/etc/notaryserver/certs/notary-server.crt"
+    },
+    "trust_service": {
+      "type": "remote",
+      "hostname": "notarysigner",
+      "port": "7899",
+      "tls_ca_file": "/etc/notaryserver/certs/root-ca.crt",
+      "key_algorithm": "ecdsa",
+      "tls_client_cert": "/etc/notaryserver/certs/notary-server.crt",
+      "tls_client_key": "/etc/notaryserver/certs/notary-server.key"
+    },
+    "logging": {
+        "level": "debug"
+    },
+	"storage": {
+		"backend": "postgres",
+		"db_url": "postgres://server@postgresql:5432/notaryserver?sslmode=verify-ca&sslrootcert=/etc/notaryserver/database/ca.pem&sslcert=/etc/notaryserver/database/notary-server.pem&sslkey=/etc/notaryserver/database/notary-server-key.pem"
+	}
+}

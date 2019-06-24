@@ -1,0 +1,68 @@
+version: '3.1'
+services:
+  registry:
+    image: registry:2.7.1
+    ports:
+      - 5000:5000
+    environment:
+      - DOCKER_REGISTRY_CONFIG=/registry_conf/config.yml
+    volumes:
+      - ./compose_assets/registry:/registry-conf
+
+  notaryserver:
+    image: notary:server-0.6.1-1
+    ports:
+      - 8082:8080
+      - 4443:4443
+    command: -config=/etc/notaryserver/server-config.json
+    volumes:
+      - ./compose_assets/notaryserver:/etc/notaryserver
+    depends_on:
+      - notarysigner
+      - registry
+
+  notarysigner:
+    image: notary:signer-0.6.1-1
+    command: -config=/etc/notarysigner/signer-config.json
+    volumes:
+      - ./compose_assets/notarysigner:/etc/notarysigner
+
+  clientpublisher_trusted:
+    build: 
+      context: compose_assets/client
+      dockerfile: Dockerfile
+    environment:
+      - DOCKER_CONTENT_TRUST_SERVER=https://notaryserver:4443
+      - DOCKER_CONTENT_TRUST=1
+      - DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE="mypassphrase123"
+      - DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE="rootpassphrase123"
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+    entrypoint: tail -f /dev/null
+    depends_on:
+      - notaryserver
+ 
+  clientpublisher_malicious:
+    build: 
+      context: compose_assets/client
+      dockerfile: Dockerfile
+    environment:
+      - DOCKER_CONTENT_TRUST_SERVER=https://notaryserver:4443
+      - DOCKER_CONTENT_TRUST=1
+      - DOCKER_CONTENT_TRUST_REPOSITORY_PASSPHRASE="mypassphrase123"
+      - DOCKER_CONTENT_TRUST_ROOT_PASSPHRASE="rootpassphrase123"
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+    entrypoint: tail -f /dev/null
+    depends_on:
+      - notaryserver
+
+  clientpublisher_untrusted:
+    build: 
+      context: compose_assets/client
+      dockerfile: Dockerfile
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+    entrypoint: tail -f /dev/null
+    depends_on:
+      - notarysigner
