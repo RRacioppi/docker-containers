@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+
+  datapower:
+    image: ibmcom/datapower
+    hostname: consul-server-1
+    volumes:
+      - ./config:/drouter/config
+      - ./local:/drouter/local
+    environment:
+      - DATAPOWER_ACCEPT_LICENSE=true
+      - DATAPOWER_INTERACTIVE=true
+      - DATAPOWER_WORKER_THREADS=4
+    ports:
+      - "9090:9090"
+    # enable web ui
+    # https://www.ibm.com/developerworks/community/forums/html/topic?id=e690c648-5f95-43e5-acf9-0695a50731a7 
+  
