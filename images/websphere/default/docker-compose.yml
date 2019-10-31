@@ -7,4 +7,4 @@ services:
     ports:
       - "9043:9043"
       - "9443:9443"
-      - "7007:7007" # remote debug: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=7007
+      - "7777:7777" # remote debug: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=7777
