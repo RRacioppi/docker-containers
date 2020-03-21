@@ -1,0 +1,58 @@
+version: '2'
+
+services:
+
+  confluent-zookeeper:
+    image: confluentinc/cp-zookeeper:5.0.0
+    expose:
+      - "2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  confluent-kafka-1:
+    image: confluentinc/cp-kafka:5.0.0
+    expose:
+      - "9092"
+    depends_on:
+      - confluent-zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: confluent-zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://confluent-kafka-1:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+
+  confluent-kafka-2:
+    image: confluentinc/cp-kafka:5.0.0
+    expose:
+      - "9092"
+    depends_on:
+      - confluent-kafka-1
+    environment:
+      KAFKA_BROKER_ID: 2
+      KAFKA_ZOOKEEPER_CONNECT: confluent-zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://confluent-kafka-2:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+
+  confluent-kafka-3:
+    image: confluentinc/cp-kafka:5.0.0
+    expose:
+      - "9092"
+    depends_on:
+      - confluent-kafka-2
+    environment:
+      KAFKA_BROKER_ID: 3
+      KAFKA_ZOOKEEPER_CONNECT: confluent-zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://confluent-kafka-3:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 3
+
+  confluent-kafka-client:
+    image: mesosphere/kafka-client
+    depends_on:
+      - confluent-zookeeper
+      - confluent-kafka-1
+      - confluent-kafka-2
+      - confluent-kafka-3
+    command: "bash -c 'sleep 15s && \ 
+      ./kafka-topics.sh --create --zookeeper confluent-zookeeper --replication-factor 3 --partitions 10 --topic test-topic && \ 
+      tail -f /dev/null'"
