@@ -1,0 +1,2 @@
+#!/bin/bash
+docker run  --network=host --rm -v "$(pwd):/sitespeed.io" sitespeedio/sitespeed.io:latest --graphite.host=127.0.0.1 https://www.sitespeed.io/ --slug prova --graphite.addSlugToKey true -n 30

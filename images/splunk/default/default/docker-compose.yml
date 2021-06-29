@@ -5,7 +5,7 @@ services:
     environment:
      SPLUNK_START_ARGS: '--accept-license'
      SPLUNK_PASSWORD: 'password'
-    image: store/splunk/splunk:7.3
+    image: splunk/splunk:7.3.4
     hostname: splunk
     ports:
       - "8000:8000"

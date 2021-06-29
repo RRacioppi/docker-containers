@@ -1,0 +1,8 @@
+version: '3.1'
+services:
+  wildfly:
+    image: jboss/wildfly
+    ports:
+      - 8080:8080
+      - 9990:9990
+    command: /opt/jboss/wildfly/bin/standalone.sh -b 0.0.0.0 -bmanagement 0.0.0.0

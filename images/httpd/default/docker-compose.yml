@@ -1,0 +1,8 @@
+version: '3.1'
+services:
+  httpd:
+    image: httpd
+    ports:
+      - 80
+    volumes:
+    - ./assets:/usr/local/apache2/htdocs
