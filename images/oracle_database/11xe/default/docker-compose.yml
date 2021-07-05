@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+    oracle_db:
+        image: oracle:11.2.0.2-xe
+        container_name: oracle
+        ports:
+            - "1521:1521"
+        # - "8081:8080"
+        environment:
+            - ORACLE_PWD=manager
+            - TZ=Europe/Rome
+        volumes:
+            - oracle-db-data:/u01/app/oracle/oradata
+            - oracle-db-backup:/opt/orabackup
+        shm_size: 1G
+        #restart: always
+
+volumes:
+    oracle-db-data:
+    oracle-db-backup:
