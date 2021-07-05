@@ -1,0 +1,7 @@
+version: "3.3"
+
+services:
+  backstage:
+    image: spotify/backstage-cookiecutter
+    ports:
+      - 7000:7000
