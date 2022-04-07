@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+    hostname: redis
+#    environment:
+ #     NEO4J_AUTH: none
+#       NEO4J_AUTH: neo4j/secret
+    ports:
+      - "6379:6379"
+
+#    volumes: 
+#      - ./neo4j/data:/data        

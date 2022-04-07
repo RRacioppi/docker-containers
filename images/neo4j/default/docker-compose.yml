@@ -2,12 +2,13 @@ version: '3'
 
 services:
   neo4j:
-    image: neo4j
+    image: neo4j:3.4.1
     hostname: neo4
     environment:
-      NEO4J_AUTH: none
+ #     NEO4J_AUTH: none
+       NEO4J_AUTH: neo4j/secret
     ports:
       - "7687:7687"
       - "7474:7474"
-    volumes: 
-      - ./neo4j/data:/data        
+#    volumes: 
+#      - ./neo4j/data:/data        
