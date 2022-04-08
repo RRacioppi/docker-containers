@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  swagger-editor:
+    image: swaggerapi/swagger-editor:latest
+    hostname: swagger-editor
+    environment:
+      SWAGGER_FILE: /tmp/schema.yaml
+ #      NEO4J_AUTH: neo4j/secret
+    ports:
+      - "8080:8080"
+    volumes: 
+      - ./tmp:/tmp        
