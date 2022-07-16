@@ -2,7 +2,7 @@ version: "3"
 
 services:
   sonarqube:
-    image: sonarqube:6.7.2
+    image: sonarqube:9.4.0-community
     hostname: sonarqube
     command: -Dsonar.ce.javaOpts=-Xmx2048m -Dsonar.web.javaOpts=-Xmx2048m
     ports:
